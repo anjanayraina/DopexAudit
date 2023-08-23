@@ -57,6 +57,7 @@ contract UniV2LiquidityAMO is AccessControl {
   constructor() {
     _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
   }
+  // @audit there is only one role so instead of access control ownable must be preferred
 
   // ================================ ADMIN FUNCTIONS ================================ //
 
@@ -123,6 +124,8 @@ contract UniV2LiquidityAMO is AccessControl {
    * @param  _spender the address of the contract to approve
    * @param  _amount the amount to approve
    */
+     // @audit there are two tokens in the pair , so there must be checks to confirm that the parameter token must be eiter tokenA or tokenB
+
   function approveContractToSpend(
     address _token,
     address _spender,
