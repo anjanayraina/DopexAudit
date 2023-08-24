@@ -32,9 +32,9 @@ contract UniV2LiquidityAMO is AccessControl {
     // token B address
     address tokenB; // weth
     // pair address
-    address pair;
+    address pair; // @audit this is for the liqiuidity pool for the pair 
     // rdpxV2Core address
-    address rdpxV2Core;
+    address rdpxV2Core; // @audit this is for sending the funds to the rdpxV2Core contract address 
     // rdpx price oracle
     address rdpxOracle;
     // AMM Factory
