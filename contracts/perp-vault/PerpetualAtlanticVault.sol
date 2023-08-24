@@ -216,6 +216,7 @@ contract PerpetualAtlanticVault is
    * @dev    Can only be called by the owner
    * @param  tokens The list of erc20 tokens to withdraw
    **/
+   //@audit GO the function can only be called by admin , so in the transfer function the admin address should be used instead of msg.sender to save some gas   
   function emergencyWithdraw(
     address[] calldata tokens
   ) external onlyRole(DEFAULT_ADMIN_ROLE) {
