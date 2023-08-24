@@ -26,6 +26,7 @@ contract UniV2LiquidityAMO is AccessControl {
   using SafeMath for uint256;
 
   // ================================ STATE VARIABLES ================================ //
+  //@audit some of the variables have been set but have never been used in the contract
   struct Addresses {
     // token A address
     address tokenA; // rdpx
@@ -136,7 +137,7 @@ contract UniV2LiquidityAMO is AccessControl {
     require(_token != address(0), "reLPContract: token cannot be 0");
     require(_spender != address(0), "reLPContract: spender cannot be 0");
     require(_amount > 0, "reLPContract: amount must be greater than 0");
-    IERC20WithBurn(_token).approve(_spender, _amount);
+    IERC20WithBurn(_token).approve(_spender, _amount); // @audit can use safeApprove here 
   }
 
   /**
