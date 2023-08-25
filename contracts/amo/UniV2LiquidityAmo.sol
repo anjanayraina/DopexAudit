@@ -152,7 +152,7 @@ contract UniV2LiquidityAMO is AccessControl {
 
     for (uint256 i = 0; i < tokens.length; i++) {
       token = IERC20WithBurn(tokens[i]);
-      token.safeTransfer(msg.sender, token.balanceOf(address(this)));
+      token.safeTransfer(msg.sender, token.balanceOf(address(this))); // @audit GO can cache the variables before the loop
     }
 
     emit LogEmergencyWithdraw(msg.sender, tokens);
@@ -192,6 +192,9 @@ contract UniV2LiquidityAMO is AccessControl {
    * @param tokenAAmountMin the minimum amount of token A to add
    * @param tokenBAmountMin the minimum amount of token B to add
    */
+
+  //@audit the address validation checks are missing here 
+  // @audit this are is vurnerable to front running , look into into some more later 
   function addLiquidity(
     uint256 tokenAAmount,
     uint256 tokenBAmount,
@@ -261,6 +264,8 @@ contract UniV2LiquidityAMO is AccessControl {
    * @param tokenAAmountMin the minimum amount of token A to receive
    * @param tokenBAmountMin the minimum amount of token B to receive
    */
+    // @audit this are is vurnerable to front running , look into into some more later 
+
   function removeLiquidity(
     uint256 lpAmount,
     uint256 tokenAAmountMin,
