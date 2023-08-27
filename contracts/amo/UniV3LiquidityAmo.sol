@@ -119,13 +119,13 @@ contract UniV3LiquidityAMO is AccessControl, ERC721Holder {
 
   // Iterate through all positions and collect fees accumulated
   function collectFees() external onlyRole(DEFAULT_ADMIN_ROLE) {
-    for (uint i = 0; i < positions_array.length; i++) {
+    for (uint i = 0; i < positions_array.length; i++) { // @audit GO the length of the array can be cached to save some gas 
       Position memory current_position = positions_array[i];
       INonfungiblePositionManager.CollectParams
         memory collect_params = INonfungiblePositionManager.CollectParams(
           current_position.token_id,
           rdpxV2Core,
-          type(uint128).max,
+          type(uint128).max, // @audit why are they put as max , look into it 
           type(uint128).max
         );
 
@@ -138,6 +138,7 @@ contract UniV3LiquidityAMO is AccessControl, ERC721Holder {
   /* ---------------------- Uni v3 ---------------------- */
   /* ---------------------------------------------------- */
 
+  // @audit GO can be made external if not getting called from within the contract 
   function approveTarget(
     address _target,
     address _token,
