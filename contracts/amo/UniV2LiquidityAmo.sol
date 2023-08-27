@@ -312,6 +312,7 @@ contract UniV2LiquidityAMO is AccessControl {
    * @param token2AmountOutMin the minimum amount of token B to receive
    * @param swapTokenAForTokenB whether to swap token A for token B
    */
+  // @audit validation checks are missing here 
   function swap(
     uint256 token1Amount,
     uint256 token2AmountOutMin,
@@ -394,7 +395,7 @@ contract UniV2LiquidityAMO is AccessControl {
   }
 
   // ================================ Events FUNCTIONS ================================ //
-
+  // @audit more of the events can be indexed 
   event LogAddLiquidity(
     address indexed sender,
     uint256 tokenAAmount,

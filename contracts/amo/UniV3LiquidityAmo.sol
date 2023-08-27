@@ -33,6 +33,7 @@ contract UniV3LiquidityAMO is AccessControl, ERC721Holder {
   /* ========== STATE VARIABLES ========== */
 
   // Uniswap v3
+  //@audit GO they are hardcoded in the constructor so they can just be made constant 
   IUniswapV3Factory public univ3_factory;
   INonfungiblePositionManager public univ3_positions;
   ISwapRouter public univ3_router;
