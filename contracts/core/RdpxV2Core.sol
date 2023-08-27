@@ -58,7 +58,7 @@ contract RdpxV2Core is
   */
 
   /// @notice Array containg the reserve assets
-  ReserveAsset[] public reserveAsset;
+  ReserveAsset[] public reserveAsset; // @audit how are they different from normal tokens ??
 
   /// @notice Array that contains the addresses of the AMO
   address[] public amoAddresses;
@@ -67,7 +67,7 @@ contract RdpxV2Core is
   address public weth;
 
   /// @notice Array that contains the symbol of the reserve tokens
-  string[] public reserveTokens;
+  string[] public reserveTokens; // what is the need fo this array when we already have reserveAsset
 
   /// @notice Mapping that contains the index for a specific token in the reserves
   mapping(string => uint256) public reservesIndex;
