@@ -56,12 +56,12 @@ contract RdpxV2Core is
      index3: dpxEth
      index4: crv
   */
-
-  /// @notice Array containg the reserve assets
+ // @audit the spelling of containing is wrong down there 
+  /// @notice Array containg the reserve assets 
   ReserveAsset[] public reserveAsset; // @audit how are they different from normal tokens ??
 
   /// @notice Array that contains the addresses of the AMO
-  address[] public amoAddresses;
+  address[] public amoAddresses; // @audit what is AMO ?
 
   /// @notice Token address that dpxEth is pegged to
   address public weth;
@@ -115,7 +115,7 @@ contract RdpxV2Core is
   bool public isReLPActive;
 
   /// @notice Whether put options are requred
-  bool public putOptionsRequired;
+  bool public putOptionsRequired; // @audit what does this mean ?
 
   /// @notice Delegates array
   Delegate[] public delegates;
@@ -245,7 +245,7 @@ contract RdpxV2Core is
 
     for (uint256 i = 1; i < reserveAsset.length; i++) {
       require(
-        reserveAsset[i].tokenAddress != _asset,
+        reserveAsset[i].tokenAddress != _asset, // @audit this check must be changed to reserveAsset[i].tokenAddress != _asset || reserveAsset[i].tokenAddress == address(0) as we want a new asset
         "RdpxV2Core: asset already exists"
       );
     }
