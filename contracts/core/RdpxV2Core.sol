@@ -336,6 +336,7 @@ contract RdpxV2Core is
       reLPContract: _reLPContract,
       receiptTokenBonds: _receiptTokenBonds
     });
+    // @audit safeApprove not used , even if we know the tokens we still need to check if the approve was successful
     IERC20WithBurn(weth).approve(
       addresses.perpetualAtlanticVault,
       type(uint256).max
