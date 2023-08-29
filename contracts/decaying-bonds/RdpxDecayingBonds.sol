@@ -102,7 +102,7 @@ contract RdpxDecayingBonds is
 
     for (uint256 i = 0; i < tokens.length; i++) {
       token = IERC20WithBurn(tokens[i]);
-      token.safeTransfer(msg.sender, token.balanceOf(address(this)));
+      token.safeTransfer(msg.sender, token.balanceOf(address(this))); //@audit GO the msg.sender can be cached , also i think it would be better if we use default admin 
     }
   }
 
@@ -117,7 +117,7 @@ contract RdpxDecayingBonds is
     uint256 rdpxAmount
   ) external onlyRole(MINTER_ROLE) {
     _whenNotPaused();
-    require(hasRole(MINTER_ROLE, msg.sender), "Caller is not a minter");
+    require(hasRole(MINTER_ROLE, msg.sender), "Caller is not a minter"); // @audit why is there a require when they have also added onlyRole 
     uint256 bondId = _mintToken(to);
     bonds[bondId] = Bond(to, expiry, rdpxAmount);
 
@@ -136,6 +136,8 @@ contract RdpxDecayingBonds is
   /// @dev Can only be called by the rdpxV2Core
   /// @param bondId id of the bond to decrease
   /// @param amount amount to decrease
+  // @audit a check can be added to see if the amount is less than the current amount 
+  //@audit possible chance of front running 
   function decreaseAmount(
     uint256 bondId,
     uint256 amount
