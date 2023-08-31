@@ -240,7 +240,7 @@ contract UniV2LiquidityAMO is AccessControl {
         tokenAAmountMin,
         tokenBAmountMin,
         address(this),
-        block.timestamp + 1
+        block.timestamp + 1 //@audit can put only block.timestamp to prevent front running /arbritasrge 
       );
 
     // update LP token Balance
