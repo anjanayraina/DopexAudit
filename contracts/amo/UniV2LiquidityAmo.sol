@@ -75,6 +75,7 @@ contract UniV2LiquidityAMO is AccessControl {
    * @param _ammFactory the AMM Factory
    * @param _ammRouter the AMM Router
    **/
+  
   function setAddresses(
     address _tokenA,
     address _tokenB,
@@ -138,6 +139,7 @@ contract UniV2LiquidityAMO is AccessControl {
     require(_spender != address(0), "reLPContract: spender cannot be 0");
     require(_amount > 0, "reLPContract: amount must be greater than 0");
     IERC20WithBurn(_token).approve(_spender, _amount); // @audit can use safeApprove here 
+
   }
 
   /**
@@ -227,6 +229,7 @@ contract UniV2LiquidityAMO is AccessControl {
       tokenBAmount
     );
 
+    //@audit since WETH is involved , consider using addLiquidityETH instead of the used function , refrence : https://docs.uniswap.org/contracts/v2/guides/smart-contract-integration/providing-liquidity#:~:text=use%20addLiquidity.%20If%20WETH%20is%20involved%2C%20use%20addLiquidityETH.
     // add Liquidity
     (tokenAUsed, tokenBUsed, lpReceived) = IUniswapV2Router(addresses.ammRouter)
       .addLiquidity(
