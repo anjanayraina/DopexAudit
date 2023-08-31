@@ -385,7 +385,7 @@ contract UniV2LiquidityAMO is AccessControl {
    * @return lpTokenBalanceInWeth the LP token balance in weth
    */
   function getLpTokenBalanceInWeth() external view returns (uint256) {
-    return (lpTokenBalance * getLpPrice()) / 1e8;
+    return (lpTokenBalance * getLpPrice()) / 1e8; // @audit use constants instead of magic numbers 
   }
 
   /**
