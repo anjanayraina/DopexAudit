@@ -118,7 +118,7 @@ contract UniV3LiquidityAMO is AccessControl, ERC721Holder {
   /* ========== RESTRICTED FUNCTIONS, BUT CUSTODIAN CAN CALL ========== */
 
   // Iterate through all positions and collect fees accumulated
-  //@audit if the array lenght is high enough, the gas limit migth exceed , try to use pull transaction instead of push 
+  //@audit if the array lenght is high enough, the block gas limit migth exceed , try to use pull transaction instead of push 
   function collectFees() external onlyRole(DEFAULT_ADMIN_ROLE) {
     for (uint i = 0; i < positions_array.length; i++) { // @audit GO the length of the array can be cached to save some gas 
       Position memory current_position = positions_array[i];
@@ -158,6 +158,7 @@ contract UniV3LiquidityAMO is AccessControl, ERC721Holder {
   }
 
   // IUniswapV3Pool public current_uni_pool; // only used for mint callback; is set and accessed during execution of addLiquidity()
+  // @audit the return values from approve and transferFrom are not caught and reverted if the transactions failed 
   function addLiquidity(
     AddLiquidityParams memory params
   ) public onlyRole(DEFAULT_ADMIN_ROLE) {
