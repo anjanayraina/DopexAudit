@@ -118,6 +118,7 @@ contract UniV3LiquidityAMO is AccessControl, ERC721Holder {
   /* ========== RESTRICTED FUNCTIONS, BUT CUSTODIAN CAN CALL ========== */
 
   // Iterate through all positions and collect fees accumulated
+  //@audit if the array lenght is high enough, the gas limit migth exceed , try to use pull transaction instead of push 
   function collectFees() external onlyRole(DEFAULT_ADMIN_ROLE) {
     for (uint i = 0; i < positions_array.length; i++) { // @audit GO the length of the array can be cached to save some gas 
       Position memory current_position = positions_array[i];
@@ -139,18 +140,20 @@ contract UniV3LiquidityAMO is AccessControl, ERC721Holder {
   /* ---------------------------------------------------- */
 
   // @audit GO can be made external if not getting called from within the contract 
+  // @audit validation checks are missing in this funciton 
   function approveTarget(
     address _target,
     address _token,
     uint256 _amount,
     bool use_safe_approve
   ) public onlyRole(DEFAULT_ADMIN_ROLE) {
+    // @audit add a check that the given token adderss is USDT 
     if (use_safe_approve) {
       // safeApprove needed for USDT and others for the first approval
       // You need to approve 0 every time beforehand for USDT: it resets
       TransferHelper.safeApprove(_token, _target, _amount);
     } else {
-      IERC20WithBurn(_token).approve(_target, _amount);
+      IERC20WithBurn(_token).approve(_target, _amount); //@audit the return value of approve is not stored and used 
     }
   }
 
@@ -212,7 +215,7 @@ contract UniV3LiquidityAMO is AccessControl, ERC721Holder {
     // send tokens to rdpxV2Core
     _sendTokensToRdpxV2Core(params._tokenA, params._tokenB);
   }
-
+  // @audit validation checks are missing (this happens in all of the contract)
   function removeLiquidity(
     uint256 positionIndex,
     uint256 minAmount0,
