@@ -23,6 +23,7 @@ import { IERC20WithBurn } from "../interfaces/IERC20WithBurn.sol";
 
 // @audit                GENERAL BUGS 
 // @audit vaildation checks are missing in almost all of the functiuons 
+// @audit natspec format not followed here 
 abstract contract OracleLike {
   function read() external view virtual returns (uint);
 
