@@ -136,6 +136,7 @@ contract UniV2LiquidityAMO is AccessControl {
     address _spender,
     uint256 _amount
   ) external onlyRole(DEFAULT_ADMIN_ROLE) {
+    // require(_token == addresses.tokenA || _token ==addresses.tokenB )
     require(_token != address(0), "reLPContract: token cannot be 0");
     require(_spender != address(0), "reLPContract: spender cannot be 0");
     require(_amount > 0, "reLPContract: amount must be greater than 0");
