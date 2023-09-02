@@ -349,6 +349,7 @@ contract UniV3LiquidityAMO is AccessControl, ERC721Holder {
   }
 
   // Generic proxy
+  
   function execute(
     address _to,
     uint256 _value,
@@ -377,7 +378,7 @@ contract UniV3LiquidityAMO is AccessControl, ERC721Holder {
   }
 
   /* ========== EVENTS ========== */
-
+  // @audit index the events so that they can be caught easily by off chain scanning tools 
   event RecoveredERC20(address token, uint256 amount);
   event RecoveredERC721(address token, uint256 id);
   event LogAssetsTransfered(
