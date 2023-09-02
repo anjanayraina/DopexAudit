@@ -232,6 +232,7 @@ contract UniV2LiquidityAMO is AccessControl {
 
     //@audit since WETH is involved , consider using addLiquidityETH instead of the used function , refrence : https://docs.uniswap.org/contracts/v2/guides/smart-contract-integration/providing-liquidity#:~:text=use%20addLiquidity.%20If%20WETH%20is%20involved%2C%20use%20addLiquidityETH.
     // add Liquidity
+    // @audit add a check for adding slippage to the function 
     (tokenAUsed, tokenBUsed, lpReceived) = IUniswapV2Router(addresses.ammRouter)
       .addLiquidity(
         addresses.tokenA,

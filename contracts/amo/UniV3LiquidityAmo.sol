@@ -20,6 +20,9 @@ import "../uniswap_V3/ISwapRouter.sol";
 import { IERC20WithBurn } from "../interfaces/IERC20WithBurn.sol";
 
 // @audit this abstract contract is not being used anywhere in the contract anywhere 
+
+// @audit                GENERAL BUGS 
+// @audit vaildation checks are missing in almost all of the functiuons 
 abstract contract OracleLike {
   function read() external view virtual returns (uint);
 
@@ -106,7 +109,7 @@ contract UniV3LiquidityAMO is AccessControl, ERC721Holder {
 
     // goes into the pool's positions mapping, and grabs this address's liquidity
     (uint128 liquidity, , , , ) = get_pool.positions(
-      keccak256(abi.encodePacked(address(this), _tickLower, _tickUpper))
+      keccak256(abi.encodePacked(address(this), _tickLower, _tickUpper)) //@audit GO use hardcoded address instead of address(this) , refrence : https://code4rena.com/reports/2023-05-base#10-use-hardcode-address-instead-addressthis
     );
     return liquidity;
   }
