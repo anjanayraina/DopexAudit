@@ -76,6 +76,7 @@ contract UniV2LiquidityAMO is AccessControl {
    * @param _ammRouter the AMM Router
    **/
   
+  //@audit GO assembly can be used to check for null address . Refrence : https://code4rena.com/reports/2023-05-base#07-use-assembly-to-check-for-address0
   function setAddresses(
     address _tokenA,
     address _tokenB,
