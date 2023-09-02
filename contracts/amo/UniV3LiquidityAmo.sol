@@ -33,7 +33,8 @@ contract UniV3LiquidityAMO is AccessControl, ERC721Holder {
   /* ========== STATE VARIABLES ========== */
 
   // Uniswap v3
-  //@audit GO they are hardcoded in the constructor so they can just be made constant and added outside here 
+  //@audit GO they are hardcoded in the constructor and never changed so they can just be made constant and added outside here 
+  //@audit since they are constants, they should be named with capital letter 
   IUniswapV3Factory public univ3_factory;
   INonfungiblePositionManager public univ3_positions;
   ISwapRouter public univ3_router;
@@ -118,9 +119,9 @@ contract UniV3LiquidityAMO is AccessControl, ERC721Holder {
   /* ========== RESTRICTED FUNCTIONS, BUT CUSTODIAN CAN CALL ========== */
 
   // Iterate through all positions and collect fees accumulated
-  //@audit if the array lenght is high enough, the block gas limit migth exceed , try to use pull transaction instead of push 
+  //@audit if the array lenght is high enough, the block gas limit migth exceed , try to use pull transaction instead of push or use mappings and keep track of the id seperately
   function collectFees() external onlyRole(DEFAULT_ADMIN_ROLE) {
-    for (uint i = 0; i < positions_array.length; i++) { // @audit GO the length of the array can be cached to save some gas 
+    for (uint i = 0; i < positions_array.length; i++) { 
       Position memory current_position = positions_array[i];
       INonfungiblePositionManager.CollectParams
         memory collect_params = INonfungiblePositionManager.CollectParams(
