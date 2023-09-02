@@ -119,7 +119,7 @@ contract UniV3LiquidityAMO is AccessControl, ERC721Holder {
   /* ========== RESTRICTED FUNCTIONS, BUT CUSTODIAN CAN CALL ========== */
 
   // Iterate through all positions and collect fees accumulated
-  //@audit if the array lenght is high enough, the block gas limit migth exceed , try to use pull transaction instead of push or use mappings and keep track of the id seperately
+  //@audit if the array lenght is high enough, the block gas limit migth exceed , try to use pull transaction instead of push or use mappings and keep track of the id seperately. Even if looping over it is necessary , try to do it in chunks rather than in a single transaction 
   function collectFees() external onlyRole(DEFAULT_ADMIN_ROLE) {
     for (uint i = 0; i < positions_array.length; i++) { 
       Position memory current_position = positions_array[i];
@@ -182,7 +182,8 @@ contract UniV3LiquidityAMO is AccessControl, ERC721Holder {
       address(univ3_positions),
       params._amount1Desired
     );
-
+// @audit add a check here that the amount0Min and amount1Min must be greater than 0 to add some slippage and avoid frunt running 
+// @audit suggestion: add a slippage estimation process 
     INonfungiblePositionManager.MintParams
       memory mintParams = INonfungiblePositionManager.MintParams(
         params._tokenA,
