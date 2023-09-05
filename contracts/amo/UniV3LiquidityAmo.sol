@@ -124,14 +124,14 @@ contract UniV3LiquidityAMO is AccessControl, ERC721Holder {
 
   // Iterate through all positions and collect fees accumulated
   //@audit MR if the array lenght is high enough, the block gas limit migth exceed , try to use pull transaction instead of push or use mappings and keep track of the id seperately. Even if looping over it is necessary , try to do it in chunks rather than in a single transaction 
-  function collectFees() external onlyRole(DEFAULT_ADMIN_ROLE) {
-    for (uint i = 0; i < positions_array.length; i++) { 
+  function collectFees(uint256 lowerBound , uint256 upperBound ) external onlyRole(DEFAULT_ADMIN_ROLE) {
+    for (uint i = lowerBound; i <= upperBound; i++) { 
       Position memory current_position = positions_array[i];
       INonfungiblePositionManager.CollectParams
         memory collect_params = INonfungiblePositionManager.CollectParams(
           current_position.token_id,
           rdpxV2Core,
-          type(uint128).max, // @audit why are they put as max , look into it 
+          type(uint128).max, 
           type(uint128).max
         );
 
