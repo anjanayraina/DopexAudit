@@ -98,6 +98,7 @@ contract UniV3LiquidityAMO is AccessControl, ERC721Holder {
   /* ========== VIEWS ========== */
 
   // Returns this contract's liquidity in a specific [Rdpx]-[collateral] uni v3 pool
+  // @audit functions that are only called by the admin can be made payable to save gas https://code4rena.com/reports/2023-05-base#10-use-hardcode-address-instead-addressthis:~:text=%5B11%5D%20Functions%20guaranteed%20to%20revert%20when%20called%20by%20normal%20users%20can%20be%20marked%20payable
   function liquidityInPool(
     address _collateral_address,
     int24 _tickLower,
